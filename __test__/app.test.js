@@ -43,17 +43,45 @@ describe('application routes', () => {
             __v: 0
           }]);
           expect(res.body).toHaveLength(1);
-        });
+        })
     });
     it('can find bar by id and update', () => {
       return request(app)
       .put('/bars/:id')
+      .send ({
+        _id: '5deb60b2f87b457a50134d34',
+      })
       .then(res => {
         expect(res.body).toEqual([{
-          _id: expect.any(String)
-
+          _id: '5deb60b2f87b457a50134d34',
+        }])
+      })
+    });
+    it('can find bar by id and delete', () => {
+      return request(app)
+      .put('/bars/:id')
+      .send ({
+        _id: '5deb60b2f87b457a50134d34',
+      })
+      .then(res => {
+        expect(res.body).toEqual([{
+          _id: '5deb60b2f87b457a50134d34',
+        }])
+      })
+    });
+    it('can find bar by a single id', () => {
+      return request(app)
+      .put('/bars/:id')
+      .send ({
+        _id: '5deb60b2f87b457a50134d34',
+      })
+      .then(res => {
+        expect(res.body).toEqual([{
+          _id: '5deb60b2f87b457a50134d34',
         }])
       })
     })
-});
+  });
 
+
+  
