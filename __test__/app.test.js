@@ -6,17 +6,13 @@ const colors = require('colors');
 const mongoose = require('mongoose');
 
 
-
 describe('application routes', () => {
-
   beforeAll(() => {
     connect()
   });
-
   afterAll(() => {
     return mongoose.connection.dropDatabase();
   });
-  
   it('can create a bar using post', () => {
     return request(app)
     .post('/bars')
@@ -26,7 +22,6 @@ describe('application routes', () => {
       age: 21
     })
     .then(res => {
-      console.log('recieved response in test');
       expect(res.body).toEqual({
         _id: expect.any(String),
         name: 'some bar',
@@ -36,7 +31,6 @@ describe('application routes', () => {
       })
     })
   });
-  
     it('can get all bars using get method', () => {
       return request(app)
         .get('/bars')
@@ -51,5 +45,15 @@ describe('application routes', () => {
           expect(res.body).toHaveLength(1);
         });
     });
+    it('can find bar by id and update', () => {
+      return request(app)
+      .put('/bars/:id')
+      .then(res => {
+        expect(res.body).toEqual([{
+          _id: expect.any(String)
 
+        }])
+      })
+    })
 });
+
