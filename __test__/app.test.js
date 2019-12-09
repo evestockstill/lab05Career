@@ -48,7 +48,30 @@ describe('application routes', () => {
     });
 
 
-    
+
+    it('can find bar by id and delete', () => {
+      return request(app)
+      .get('./bars')
+        .send({
+          _id: 1,
+          name: 'some new bar',
+          phone: '555-555-5555',
+          age: 21
+        })
+      .then(res => {
+        
+        expect(res.body).toEqual([{
+          _id: 1,
+          name: 'some new bar',
+          phone: '555-555-5555',
+          age: 21,
+          __v: 0
+      }])
+    });
+  });
+
+
+
 // it('should update a bar', async () => {
    
 //     const updatedBar = await request(app)
