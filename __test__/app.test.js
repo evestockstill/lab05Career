@@ -1,17 +1,19 @@
 require('dotenv').config();
+const connect = require('../config/db');
 const request = require('supertest');
 const app = require('../lib/app');
-const connect = require('../config/db');
 const colors = require('colors');
 const mongoose = require('mongoose');
 
-
 describe('application routes', () => {
   beforeAll(() => {
-    connect()
+    connect();
+  });
+  beforeEach(() => {
+    return mongoose.connection.dropDatabase();
   });
   afterAll(() => {
-    return mongoose.connection.dropDatabase();
+    return mongoose.connection.close()
   });
   it('can create a bar using post', () => {
     return request(app)
@@ -91,3 +93,79 @@ it('can find bar by id and delete', () => {
 
 
 
+it('gets all bars on Get', async() => {
+  cont bar = await Bar.create([
+    {
+      name: 'some bar',
+      phone: '555-555-5555',
+      age: 21,
+  },
+  {
+    name: 'some bar',
+    phone: '555-555-5555',
+    age: 21,
+  }
+  ]);
+  return request(app)
+  .get('/bars')
+  .then(res => {
+    BroadcastChannel.forEach(bar => {
+      expect(res.body).toContainEqual({
+        _id: bar._id.toString(),
+        name: bar.name,
+        phone: bar.phone,
+        age: bar.age,
+        __v: bar.__v
+      }));
+    });
+  });
+});
+
+
+it('gets a bar by id on GET', async() => {
+  const bar =  await Bar.create ({
+    name: 'some bar',
+      phone: '555-555-5555',
+        age: 21,
+  });
+  return request(app)
+  .get(`/bars/${bar._id}`)
+  .then(res => {
+    expect(res.body).toEqual({
+       _id: bar._id.toString(),
+        name: bar.name,
+        phone: bar.phone,
+        age: bar.age,
+        __v: bar.__
+    })
+  })
+});
+
+it('updates with PATCH', async() => {
+  const bar = await Bar.create({
+    name: 'some bar',
+    phone: '555-555-5555',
+    age: 21,
+  });
+  return request (app)
+  .patch(`/bars/${bar._id}`)
+  .send({ name: 'some baar' })
+  .then(res => {
+expect(res.body).toEqual({
+  _id: bar._id.toString(),
+  name: 'bar',
+  __v: bar.__v
+});
+  })
+});
+
+it('can delete', async() => {
+  const bar = await Bar.create({
+    name: 'some bar',
+    phone: '555-555-5555',
+    age: 21,
+  });
+  return request(app)
+  .delete(`/bars/${bar._id}`)
+  .then (res)
+})
