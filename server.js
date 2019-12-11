@@ -1,15 +1,13 @@
 /* eslint-disable no-console */
-const app = require('./lib/app');
 require('dotenv').config();
-require('./config/db')();
-// route files
+require('./lib/utils/connect')();
+const app = require('./lib/app');
 
 
-
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 7890;
 
 app.listen(PORT, () => {
-  console.log(`server running on ${PORT}`.yellow.bold);
+  console.log(`server running on ${PORT}`);
 });
 
 

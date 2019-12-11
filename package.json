@@ -1,18 +1,13 @@
 {
-  "name": "lab05Career",
+  "name": "starter-code",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --verbose",
-    "test-watch": "jest --watchAll --coverage",
-    "start": "node",
-    "start:watch": "nodemon",
-    "lint": "eslint **/*.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/evestockstill/lab05Career.git"
+    "test": "jest --verbose --runInBand",
+    "test:watch": "npm run test -- --watch",
+    "start": "node server.js",
+    "start:watch": "nodemon server.js"
   },
   "jest": {
     "testEnvironment": "node"
@@ -20,22 +15,17 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/evestockstill/lab05Career/issues"
-  },
-  "homepage": "https://github.com/evestockstill/lab05Career#readme",
   "devDependencies": {
     "@types/jest": "^24.0.23",
+    "colors": "^1.4.0",
     "eslint": "^6.7.2",
     "jest": "^24.9.0",
     "nodemon": "^2.0.1",
     "supertest": "^4.0.2"
   },
   "dependencies": {
-    "colors": "^1.4.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.7.13",
-    "morgan": "^1.9.1"
+    "mongoose": "^5.7.14"
   }
 }
